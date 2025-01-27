@@ -6,23 +6,25 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 2dc379b80b07bf2ddd5488cad06b2b9531da4dd31edb04dc9ec0dc226486c138
 
 build:
-  number: 1002
+  number: 1003
   noarch: python
   script: "{{ PYTHON }} -m pip install . --no-deps -vv"
 
 requirements:
-  build:
-    - python <3
+  host:
+    - python {{ python_min }}
     - pip
   run:
-    - python <3
+    - python >={{ python_min }},<3
     - docutils >=0.3
 
 test:
+  requires:
+    - python {{ python_min }}
   imports:
     - statistics
 
